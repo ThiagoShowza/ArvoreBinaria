@@ -26,7 +26,7 @@ public class ArvoreBinaria {
 	}
 
 	void calculaNivelNos(No raiz, int nivel) {
-		// Verifica se existe a arvore
+//		VERIFICA SE EXISTE A ¡RVORE
 		if (raiz == null)
 			return;
 
@@ -36,21 +36,20 @@ public class ArvoreBinaria {
 	}
 
 	public void insereValor(No raiz, int valor) {
-		// Verifica se a √°rvore est√° vazia
+//		VERFICIA SE A ¡RVORE EST¡ VAZIA
 		if (this.raiz == null) {
 			this.raiz = new No(valor);
 			return;
 		}
-
-		// Verifica para que lado da raiz vai andar
+//		VERIFICA O LADO QUE A RAIZ VAI ANDAR
 		if (valor > raiz.getValor()) {
-			// Se nao tiver lado direito, insere
-			if (raiz.getDireito() == null) {
+//			SE N√O TIVER LADO DIREITO, … INSERIDO UM VALOR
+				if (raiz.getDireito() == null) {
 				raiz.setDireito(new No(valor));
 				return;
 			}
 
-			// Insere recursivamente
+//			INSERE UM VALOR RECURSIVARMENTE
 			insereValor(raiz.getDireito(), valor);
 		} else {
 			if (raiz.getEsquerdo() == null) {
@@ -93,28 +92,31 @@ public class ArvoreBinaria {
 			return raiz;
 		}
 
-		// valor menor, procurar na sub-√°rvore esquerda
+//		VALOR MENOR, PROCURA NA SUB-¡RVORE ESQUERDA
 		if (Valor < raiz.getValor()) {
 			raiz.setEsquerdo(removeNo(raiz.getEsquerdo(), Valor));
 		} else if (Valor > raiz.getValor()) {
 			raiz.setDireito(removeNo(raiz.getDireito(), Valor));
-		} else { // valor encontrado
-					// caso 1: n√≥ √© uma folha (n√£o tem filhos)
+		} else { 
+//			VALOR ENCONTRADO
+//			N√O S√O UMA FOLHA (N√O TEM FILHOS)
+			
+			
 			if (raiz.getEsquerdo() == null && raiz.getDireito() == null) {
-				// remove-o (seta a "raiz" deste n√≥ para null)
+//				REMOVE O VALOR
 				return null;
 			} else if (raiz.getEsquerdo() != null && raiz.getEsquerdo() != null) {
-				// caso 3: n√≥ tem 2 filhos
-				// encontrar o maior dos filhos que antecede o n√≥
+//				3: N” TEM 2 FILHOS
+//				ENCONTRA O MAIOR FILHO DO N”
 				No maiorAntecessor = maiorValor(raiz.getEsquerdo());
-
-				// copia o valor do antecessor para este n√≥
+//				COPIA O VALOR ANTECESSOR DO N”
 				raiz.setValor(maiorAntecessor.getValor());
-
-				// remove o antecessor recursivamente
+				
+//				REMOVE O ANTECESSOR DE FORMA RECURSSIVA
 				raiz.setEsquerdo(removeNo(raiz.getEsquerdo(), maiorAntecessor.getValor()));
 			} else {
-				// caso 2: n√≥ s√≥ tem um filho
+//				4: N” TEM UM FILHO
+	
 				raiz = (raiz.getEsquerdo() != null) ? raiz.getEsquerdo() : raiz.getDireito();
 			}
 		}
