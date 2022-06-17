@@ -65,22 +65,59 @@ public class ArvoreBinaria {
 	public boolean buscarValor(No raiz, int Valor) {
 		boolean aux = false;
 
-		if(raiz == null) {
+		if (raiz == null) {
 			aux = false;
-		}else if(raiz.getValor() == Valor) {
+		} else if (raiz.getValor() == Valor) {
 			aux = true;
-		}else {
-			if(raiz.getValor() > Valor) {
+		} else {
+			if (raiz.getValor() > Valor) {
 				aux = buscarValor(raiz.getDireito(), Valor);
-			}else{
+			} else {
 				aux = buscarValor(raiz.getEsquerdo(), Valor);
 			}
 		}
 		return aux;
 	}
 
+	private No maiorValor(No no) {
+		while (no.getDireito() != null) {
+			no = no.getDireito();
+		}
+
+		return no;
+	}
 
 	public No removeNo(No raiz, int Valor) {
+
+		if (raiz == null) {
+			return raiz;
+		}
+
+		// valor menor, procurar na sub-árvore esquerda
+		if (Valor < raiz.getValor()) {
+			raiz.setEsquerdo(removeNo(raiz.getEsquerdo(), Valor));
+		} else if (Valor > raiz.getValor()) {
+			raiz.setDireito(removeNo(raiz.getDireito(), Valor));
+		} else { // valor encontrado
+					// caso 1: nó é uma folha (não tem filhos)
+			if (raiz.getEsquerdo() == null && raiz.getDireito() == null) {
+				// remove-o (seta a "raiz" deste nó para null)
+				return null;
+			} else if (raiz.getEsquerdo() != null && raiz.getEsquerdo() != null) {
+				// caso 3: nó tem 2 filhos
+				// encontrar o maior dos filhos que antecede o nó
+				No maiorAntecessor = maiorValor(raiz.getEsquerdo());
+
+				// copia o valor do antecessor para este nó
+				raiz.setValor(maiorAntecessor.getValor());
+
+				// remove o antecessor recursivamente
+				raiz.setEsquerdo(removeNo(raiz.getEsquerdo(), maiorAntecessor.getValor()));
+			} else {
+				// caso 2: nó só tem um filho
+				raiz = (raiz.getEsquerdo() != null) ? raiz.getEsquerdo() : raiz.getDireito();
+			}
+		}
 
 		return raiz;
 	}
